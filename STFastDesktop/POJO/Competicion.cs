@@ -10,8 +10,8 @@ namespace STFastDesktop.POJO
     public enum Tipo { Torneo,Amistoso}
     class Competicion : INotifyPropertyChanged
     {
-        public int id { get; set; }
-        public Tipo Comp_id { get; set; }
+        public int Id { get; set; }
+        public Tipo Tipo { get; set; }
         public int Capacidad { get; set; }
         public DateTime Fecha { get; set; }
         public string Premio { get; set; }
@@ -20,18 +20,18 @@ namespace STFastDesktop.POJO
         {
 
         }
-        public Competicion(int id, Tipo comp_id, int capacidad, DateTime fecha)
+        public Competicion(int id, Tipo tipo, DateTime fecha)
         {
-            this.id = id;
-            Comp_id = comp_id;
-            Capacidad = capacidad;
+            Id = id;
+            Tipo = tipo;
+            Capacidad = 2;
             Fecha = fecha;
         }
 
-        public Competicion(int id, Tipo comp_id, int capacidad, DateTime fecha, string premio)
+        public Competicion(int id, Tipo tipo, int capacidad, DateTime fecha, string premio)
         {
-            this.id = id;
-            Comp_id = comp_id;
+            Id = id;
+            Tipo = tipo;
             Capacidad = capacidad;
             Fecha = fecha;
             Premio = premio;

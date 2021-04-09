@@ -12,14 +12,14 @@ namespace STFastDesktop.POJO
         public int Id { get; set; }
         public int Juego { get; set; }
         public int JNombre { get; set; }
-        public int Logo { get; set; }
+        public string Logo { get; set; }
 
         public Equipo()
         {
 
         }
 
-        public Equipo(int id, int juego, int jNombre, int logo)
+        public Equipo(int id, int juego, int jNombre, string logo)
         {
             Id = id;
             Juego = juego;

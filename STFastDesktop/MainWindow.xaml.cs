@@ -57,5 +57,10 @@ namespace STFastDesktop
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        private void TabablzControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
