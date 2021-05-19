@@ -19,17 +19,41 @@ namespace STFastDesktop
     /// </summary>
     public partial class Login : Window
     {
+        LoginVM _vm;
         public Login()
         {
+            
+            _vm = new LoginVM();
             InitializeComponent();
+            DataContext = _vm;
+            userLogin_textBox.Text = Properties.Settings.Default.usuarioLogin;
+            Properties.Settings.Default.Save();
+
         }
 
         private void Login_Executed(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            main.Show();
-            this.Close();
+            if (_vm.ComprobarLogin(userLogin_textBox.Text, passwLogin_textBox.Password) == true)
+            {
+                errorLogin_TextBlock.Text = "";
+                if (recordarUser_CheckBox.IsChecked == true)
+                {
+                    Properties.Settings.Default.usuarioLogin = userLogin_textBox.Text;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.usuarioLogin = "";
+                    Properties.Settings.Default.Save();
+                }
+                
+                MainWindow main = new MainWindow();
+                main.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                main.Show();
+                this.Close();
+                
+            }
+            else errorLogin_TextBlock.Text = "*Credenciales incorrectas";
         }
 
         private void Login_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -85,7 +109,6 @@ namespace STFastDesktop
             }
             else passwLogin_textBox.Background = null;
         }
-
 
     }
 }

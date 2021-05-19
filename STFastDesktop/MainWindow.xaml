@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:STFastDesktop"
+        xmlns:clases="clr-namespace:STFastDesktop.POJO"
         mc:Ignorable="d"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -24,6 +25,66 @@
         <CommandBinding Command="local:CustomCommands.MinMain"
                         Executed="MinMain_Executed">
         </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.AñadirJuego"
+                        Executed="AñadirJuego_Executed">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.ModificarJuego"
+                        Executed="ModificarJuego_Executed"
+                        CanExecute="ModificarJuego_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.EliminarJuego"
+                        Executed="EliminarJuego_Executed"
+                        CanExecute="EliminarJuego_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.GuardarJuego"
+                        Executed="GuardarJuego_Executed"
+                        CanExecute="GuardarJuego_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.AñadirEquipo"
+                        Executed="AñadirEquipo_Executed">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.ModificarEquipo"
+                        Executed="ModificarEquipo_Executed"
+                        CanExecute="ModificarEquipo_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.EliminarEquipo"
+                        Executed="EliminarEquipo_Executed"
+                        CanExecute="EliminarEquipo_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.GuardarEquipo"
+                        Executed="GuardarEquipo_Executed"
+                        CanExecute="GuardarEquipo_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.AñadirJugador"
+                        Executed="AñadirJugador_Executed">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.ModificarJugador"
+                        Executed="ModificarJugador_Executed"
+                        CanExecute="ModificarJugador_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.EliminarJugador"
+                        Executed="EliminarJugador_Executed"
+                        CanExecute="EliminarJugador_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.GuardarJugador"
+                        Executed="GuardarJugador_Executed"
+                        CanExecute="GuardarJugador_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.AñadirCompeticion"
+                        Executed="AñadirCompeticion_Executed">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.ModificarCompeticion"
+                        Executed="ModificarCompeticion_Executed"
+                        CanExecute="ModificarCompeticion_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.EliminarCompeticion"
+                        Executed="EliminarCompeticion_Executed"
+                        CanExecute="EliminarCompeticion_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="local:CustomCommands.GuardarCompeticion"
+                        Executed="GuardarCompeticion_Executed"
+                        CanExecute="GuardarCompeticion_CanExecute">
+        </CommandBinding>
     </Window.CommandBindings>
     <Window.Resources>
         <Style TargetType="Button" x:Key="button_windows_Style">
@@ -42,7 +103,7 @@
             <Setter Property="Height" Value="20"/>
         </Style>
         <ControlTemplate x:Key="Form_TextBoxControlTemplate1" TargetType="{x:Type TextBox}">
-            <Border x:Name="border" BorderBrush="Black" BorderThickness="1" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="1" Height="20"
+            <Border x:Name="border" BorderBrush="Black" BorderThickness="1" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="1" Height="20" Padding="2,0,0,0"
                    Width="150" HorizontalAlignment="Left">
                 <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
             </Border>
@@ -85,7 +146,21 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        <!-- TORNEOS LISTBOX TEMPLATE-->
+        <!-- JUEGOS LISTBOX TEMPLATE-->
+        <DataTemplate DataType="{x:Type clases:Juego}" x:Key="juego_DataTemplate">
+            <Border Width="200" Height="300" Margin="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Logo}"/>
+                    <TextBlock FontSize="50" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding JNombre}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
 
     </Window.Resources>
     <Grid>
@@ -110,24 +185,55 @@
                     <dragablz:InterTabController/>
                 </dragablz:TabablzControl.InterTabController>
                 <TabItem Header="JUEGOS">
-                    <Grid>
+                    <Grid Margin="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <Border  Grid.Column="1" Margin="20" BorderBrush="Black" BorderThickness="1" Padding="20">
+                        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="0" ItemTemplate="{StaticResource juego_DataTemplate}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemsSource="{Binding Path=ListaJuegos}" SelectedItem="{Binding Path=JuegoSeleccionado}"
+                             Padding="5" Margin="10">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel></WrapPanel>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <DockPanel LastChildFill="False"  Grid.Row="1" >
+                            <Button Height="25" Width="100" Command="local:CustomCommands.AñadirJuego">Añadir</Button>
+                            <Button Height="25" Width="100" Margin="5,0,0,0"  Command="local:CustomCommands.ModificarJuego">Modificar</Button>
+                            <Button DockPanel.Dock="Right" Height="25" Width="100" Margin="0,0,10,0"  Command="local:CustomCommands.EliminarJuego">Eliminar</Button>
+                        </DockPanel>
+                        <Border  Grid.RowSpan="2" Grid.Column="1" Margin="20" BorderBrush="Black" BorderThickness="1" Padding="20,20,20,10">
                             <StackPanel>
-                                <StackPanel>
+                                <Button  Width="100" Height="100" HorizontalAlignment="Center" Background="#FFFAFAFA" BorderBrush="Black" Padding="2">
+                                    <Grid>
+                                        <Image Source="{Binding EquipoFormulario.Logo, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill" />
+                                        <Image Source="Resources/plus-box.png" Width="30"/>
+                                    </Grid>
+                                </Button>
+                                <StackPanel Margin="0,30,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="IdJuego_TextBlock" Text="Id Juego" FontSize="17"/>
+                                        <Image Source="Resources/infoForm.png" Height="20" Margin="5,0,0,0" ToolTip="dfsfds"/>
+                                    </StackPanel>
+                                    <TextBox Text="" ToolTip="Id del juego"></TextBox>
+                                </StackPanel>
+                                <StackPanel Margin="0,20,0,0">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Nombre" FontSize="17"/>
                                         <Image Source="Resources/infoForm.png" Height="20" Margin="5,0,0,0" ToolTip="dfsfds"/>
                                     </StackPanel>
-                                    <TextBox Text="" ToolTip="dsdsd"></TextBox>
+                                    <TextBox Text="" ToolTip="Nombre del juego"></TextBox>
                                 </StackPanel>
+                                <Button  Margin="0,20,0,0" Height="25" Width="85" HorizontalAlignment="Right" Command="local:CustomCommands.GuardarJuego">Guardar</Button>
                             </StackPanel>
+                            
                         </Border>
                     </Grid>
                 </TabItem>
@@ -135,21 +241,26 @@
                     <Grid Margin="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="280"/>
+                            <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <DataGrid ItemsSource="{Binding Equipo}" AutoGenerateColumns="False" Margin="0,0,40,0">
+                        <DataGrid ItemsSource="{Binding Path=ListaEquipos}" SelectedItem="{Binding Path=EquipoSeleccionado}" AutoGenerateColumns="False" Margin="0,0,40,10">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id_Equipo}"/>
                                 <DataGridTextColumn Header="Juego ID" Binding="{Binding Juego}"/>
-                                <DataGridTextColumn Header="Juego" Binding="{Binding JNombre}"/>
-                                <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}"/>
-                                <DataGridTextColumn Header="Premio" Binding="{Binding Premio}"/>
+                                <DataGridTextColumn Header="Nombre" Binding="{Binding ENombre}"/>
+                                <DataGridTextColumn Header="Abreviación" Binding="{Binding Abreviacion}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Border  Grid.Column="1" BorderBrush="#272a33" BorderThickness="1" Padding="10" CornerRadius="2">
+                        <DockPanel LastChildFill="False"  Grid.Row="1">
+                            <Button Height="25" Width="100" Command="local:CustomCommands.AñadirEquipo">Añadir</Button>
+                            <Button Height="25" Width="100" Margin="5,0,0,0"  Command="local:CustomCommands.ModificarEquipo">Modificar</Button>
+                            <Button DockPanel.Dock="Right" Height="25" Width="100" Margin="0,0,10,0"  Command="local:CustomCommands.EliminarEquipo">Eliminar</Button>
+                        </DockPanel>
+                        <Border  Grid.Column="1" Grid.RowSpan="2" BorderBrush="#272a33" BorderThickness="1,0,0,0" Padding="25,10,10,10" CornerRadius="2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
@@ -157,34 +268,36 @@
                                     <ColumnDefinition Width="20"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="80"/>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="Nombre" Style="{StaticResource form_TextBlock_Style}"/>
-                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" VerticalContentAlignment="Center"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Nombre del torneo" Grid.Column="2"/>
+                                <Button Grid.ColumnSpan="3" Width="80" Height="80" HorizontalAlignment="Center" Background="#FFFAFAFA" BorderBrush="Black" Padding="2">
+                                    <Grid>
+                                        <Image Source="{Binding EquipoFormulario.Logo, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill" />
+                                        <Image Source="Resources/plus-box.png" Width="30"/>
+                                    </Grid>
+                                </Button>
+                                <TextBlock Text="Equipo ID" Style="{StaticResource form_TextBlock_Style}" Grid.Row="1"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding EquipoFormulario.Id_Equipo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="ID del equipo" Grid.Row="1" Grid.Column="2"/>
 
-                                <TextBlock Text="Capacidad" Style="{StaticResource form_TextBlock_Style}" Grid.Row="1"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="1"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Número máximo de equipos permitidos" Grid.Column="2" Grid.Row="1"/>
+                                <TextBlock Text="Juego ID" Style="{StaticResource form_TextBlock_Style}" Grid.Row="2"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding EquipoFormulario.Juego, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="ID del juego vinculado" Grid.Row="2" Grid.Column="2"/>
 
-                                <TextBlock Text="Fecha" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="2"/>
-                                <DatePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" />
-                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Fecha de inicio del encuentro" Grid.Column="2" Grid.Row="2"/>
+                                <TextBlock Text="Equipo" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="3" Text="{Binding EquipoFormulario.ENombre, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Nombre del equipo" Grid.Column="2" Grid.Row="3"/>
 
-                                <TextBlock Text="Hora" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
-                                <materialDesign:TimePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="3"/>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Hora de inicio del encuentro" Grid.Column="2" Grid.Row="3"/>
+                                <TextBlock Text="Abreviación" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="4"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="4" Text="{Binding EquipoFormulario.Abreviacion, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Abreviación del nombre del equipo" Grid.Column="2" Grid.Row="4"/>
 
-                                <TextBlock Text="Premio" Style="{StaticResource form_TextBlock_Style}" Grid.Row="4"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="4"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Premio en dinero u otro objeto canjeable" Grid.Column="2" Grid.Row="4"/>
-
-                                <Button Grid.Row="5" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right" >Guardar</Button>
+                                <Button Grid.Row="5" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right"  Command="local:CustomCommands.GuardarEquipo">Guardar</Button>
                             </Grid>
                         </Border>
                     </Grid>
@@ -197,17 +310,25 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <DataGrid ItemsSource="{Binding Equipo}" AutoGenerateColumns="False" Margin="0,0,40,0">
+                        <DataGrid ItemsSource="{Binding Path=ListaJugadores}" SelectedItem="{Binding Path=JugadorSeleccionado}" AutoGenerateColumns="False" Margin="0,0,40,10">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Juego ID" Binding="{Binding Juego}"/>
-                                <DataGridTextColumn Header="Juego" Binding="{Binding JNombre}"/>
-                                <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}"/>
-                                <DataGridTextColumn Header="Premio" Binding="{Binding Premio}"/>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id_Jugador}"/>
+                                <DataGridTextColumn Header="Perfil" Binding="{Binding ImgPerfil}"/>
+                                <DataGridTextColumn Header="Equipo ID" Binding="{Binding Equipo}"/>
+                                <DataGridTextColumn Header="Apodo" Binding="{Binding Apodo}"/>
+                                <DataGridTextColumn Header="Passwd" Binding="{Binding Passwd}"/>
+                                <DataGridTextColumn Header="Sexo" Binding="{Binding Sexo}"/>
+                                <DataGridTextColumn Header="FechaCreacion" Binding="{Binding FechaCreacion}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Border  Grid.Column="1" BorderBrush="#272a33" BorderThickness="1,0,0,0" Padding="15,0,0,0" >
+                        <DockPanel LastChildFill="False"  Grid.Row="1" >
+                            <Button Height="25" Width="100" Command="local:CustomCommands.AñadirJugador">Añadir</Button>
+                            <Button Height="25" Width="100" Margin="5,0,0,0"  Command="local:CustomCommands.ModificarJugador">Modificar</Button>
+                            <Button DockPanel.Dock="Right" Height="25" Width="100" Margin="0,0,10,0"  Command="local:CustomCommands.EliminarJugador">Eliminar</Button>
+                        </DockPanel>
+                        <Border  Grid.Column="1" Grid.RowSpan="2" BorderBrush="#272a33" BorderThickness="1,0,0,0" Padding="15,0,0,0" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
@@ -215,6 +336,7 @@
                                     <ColumnDefinition Width="20"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="80"/>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition Height="50"/>
                                     <RowDefinition Height="40"/>
@@ -222,36 +344,42 @@
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="Apodo" Style="{StaticResource form_TextBlock_Style}"/>
-                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" VerticalContentAlignment="Center"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Nombre del jugador" Grid.Column="2"/>
+                                <Button Grid.ColumnSpan="3" Width="80" Height="80" HorizontalAlignment="Center" Background="#FFFAFAFA" BorderBrush="Black">
+                                    <Grid>
+                                        <Image Source="{Binding JugadorFormulario.ImgPerfil, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill" />
+                                        <Image Source="Resources/plus-box.png" Width="30"/>
+                                    </Grid>
+                                </Button>
+                               
+                                <TextBlock Text="Jugador ID" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="1"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1"  Grid.Row="1" VerticalContentAlignment="Center" Text="{Binding JugadorFormulario.Id_Jugador, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Id del jugador"  Grid.Row="1" Grid.Column="2"/>
+                                
+                                <TextBlock Text="Equipo ID" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="2"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1"  Grid.Row="2" VerticalContentAlignment="Center" Text="{Binding JugadorFormulario.Equipo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Equipo vinculado con el jugador"  Grid.Row="2" Grid.Column="2"/>
 
-                                <TextBlock Text="Contraseña" Style="{StaticResource form_TextBlock_Style}" Grid.Row="1"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="1" ></TextBox>
-                                <Button Grid.Column="2" Grid.Row="1" Height="20" Padding="0" BorderBrush="{x:Null}" Background="#FFFAFAFA" >
+                                <TextBlock Text="Apodo" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="3" Text="{Binding JugadorFormulario.Apodo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Nickname del jugador" Grid.Column="2" Grid.Row="3"/>
+
+                                <TextBlock Text="Contraseña" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="4"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="4" Text="{Binding JugadorFormulario.Passwd, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Button Grid.Column="2" Grid.Row="4" Height="20" Padding="0" BorderBrush="{x:Null}" Background="#FFFAFAFA" >
                                     <Image Source="Resources/plus-box.png" ToolTip="Generar contraseña"/>
                                 </Button>
 
+                                <TextBlock Text="Sexo" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="5"/>
+                                <ComboBox x:Name="sexo_ComboBox" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="5" Text="{Binding JugadorFormulario.Sexo, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Sexo del jugador" Grid.Column="2" Grid.Row="5"/>
 
-                                <TextBlock Text="Fecha" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="2"/>
-                                <DatePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" />
-                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Fecha de inicio del encuentro" Grid.Column="2" Grid.Row="2"/>
-
-                                <TextBlock Text="Hora" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
-                                <materialDesign:TimePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="3"/>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Hora de inicio del encuentro" Grid.Column="2" Grid.Row="3"/>
-
-                                <TextBlock Text="Premio" Style="{StaticResource form_TextBlock_Style}" Grid.Row="4"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="4"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Premio en dinero u otro objeto canjeable" Grid.Column="2" Grid.Row="4"/>
-
-                                <Button Grid.Row="5" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right" >Guardar</Button>
+                                <Button Grid.Row="6" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right" Command="local:CustomCommands.GuardarJugador">Guardar</Button>
                             </Grid>
 
                         </Border>
                     </Grid>
                 </TabItem>
-                <TabItem Header="TORNEOS">
+                <TabItem Header="COMPETICIONES">
                     <Grid Margin="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -259,17 +387,24 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <DataGrid ItemsSource="{Binding Competicion}" AutoGenerateColumns="False" Margin="0,0,40,0">
+                        <DataGrid ItemsSource="{Binding Path=ListaTorneos}" SelectedItem="{Binding Path=TorneoSeleccionado}" AutoGenerateColumns="False" Margin="0,0,40,0">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id_Competicion}"/>
                                 <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}"/>
+                                <DataGridTextColumn Header="Tipo" Binding="{Binding Nombre}"/>
                                 <DataGridTextColumn Header="Capacidad" Binding="{Binding Capacidad}"/>
                                 <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}"/>
                                 <DataGridTextColumn Header="Premio" Binding="{Binding Premio}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Border  Grid.Column="1" BorderBrush="#272a33" BorderThickness="1" Padding="10" CornerRadius="2">
+                        <DockPanel LastChildFill="False"  Grid.Row="1" >
+                            <Button Height="25" Width="100" Command="local:CustomCommands.AñadirCompeticion">Añadir</Button>
+                            <Button Height="25" Width="100" Margin="5,0,0,0"  Command="local:CustomCommands.ModificarCompeticion">Modificar</Button>
+                            <Button DockPanel.Dock="Right" Height="25" Width="100" Margin="0,0,10,0"  Command="local:CustomCommands.EliminarCompeticion">Eliminar</Button>
+                        </DockPanel>
+                        <Border Grid.RowSpan="2" Grid.Column="1" BorderBrush="#272a33" BorderThickness="1" Padding="10" CornerRadius="2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
@@ -283,30 +418,40 @@
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="Nombre" Style="{StaticResource form_TextBlock_Style}"/>
-                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" VerticalContentAlignment="Center"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Nombre del torneo" Grid.Column="2"/>
+                                <TextBlock Text="Comp ID" Style="{StaticResource form_TextBlock_Style}"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding CompeticionFormulario.Id_Competicion, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Id de la competición" Grid.Column="2" />
 
-                                <TextBlock Text="Capacidad" Style="{StaticResource form_TextBlock_Style}" Grid.Row="1"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="1"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Número máximo de equipos permitidos" Grid.Column="2" Grid.Row="1"/>
+                                <TextBlock Text="Tipo" Style="{StaticResource form_TextBlock_Style}" Grid.Row="1"/>
+                                <ComboBox  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Text="{Binding CompeticionFormulario.Tipo, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Tipo de competición" Grid.Column="2" Grid.Row="1"/>
 
-                                <TextBlock Text="Fecha" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="2"/>
-                                <DatePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="2" />
-                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Fecha de inicio del encuentro" Grid.Column="2" Grid.Row="2"/>
+                                <TextBlock Text="Nombre" Style="{StaticResource form_TextBlock_Style}" Grid.Row="2"/>
+                                <TextBox  Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" Text="{Binding CompeticionFormulario.Nombre, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Nombre de la competición" Grid.Column="2" Grid.Row="2"/>
 
-                                <TextBlock Text="Hora" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
-                                <materialDesign:TimePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="3"/>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Hora de inicio del encuentro" Grid.Column="2" Grid.Row="3"/>
+                                <TextBlock Text="Capacidad" Style="{StaticResource form_TextBlock_Style}" Grid.Row="3"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="3" Text="{Binding CompeticionFormulario.Nombre, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Número máximo de equipos permitidos" Grid.Column="2" Grid.Row="3"/>
 
-                                <TextBlock Text="Premio" Style="{StaticResource form_TextBlock_Style}" Grid.Row="4"/>
-                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="4"></TextBox>
-                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Premio en dinero u otro objeto canjeable" Grid.Column="2" Grid.Row="4"/>
+                                <TextBlock Text="Fecha" Style="{StaticResource form_TextBlock_Style}"  Grid.Row="4"/>
+                                <DatePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="4" Text="{Binding CompeticionFormulario.Fecha, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Image Style="{StaticResource formInfo_Image_Style}"   ToolTip="Fecha de inicio del encuentro" Grid.Column="2" Grid.Row="4"/>
 
-                                <Button Grid.Row="5" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right" >Guardar</Button>
+                                <TextBlock Text="Hora" Style="{StaticResource form_TextBlock_Style}" Grid.Row="5"/>
+                                <materialDesign:TimePicker VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="5" Text="{Binding CompeticionFormulario.Fecha, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Hora de inicio del encuentro" Grid.Column="2" Grid.Row="5"/>
+
+                                <TextBlock Text="Premio" Style="{StaticResource form_TextBlock_Style}" Grid.Row="6"/>
+                                <TextBox Template="{StaticResource Form_TextBoxControlTemplate1}" Grid.Column="1" Grid.Row="6" Text="{Binding CompeticionFormulario.Premio, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Image Style="{StaticResource formInfo_Image_Style}"  ToolTip="Premio en dinero u otro objeto canjeable" Grid.Column="2" Grid.Row="6"/>
+
+                                <Button Grid.Row="7" Grid.ColumnSpan="3" Height="25" Width="85" HorizontalAlignment="Right" Command="local:CustomCommands.GuardarCompeticion">Guardar</Button>
                             </Grid>
-                            
+
                         </Border>
                     </Grid>
                 </TabItem>

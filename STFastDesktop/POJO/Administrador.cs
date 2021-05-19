@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace STFastDesktop.POJO
 {
-    class Administrador : INotifyPropertyChanged
+    public class Administrador : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        public int Id_Admin { get; set; }
         public string Usuario { get; set; }
         public string Passwd { get; set; }
 
@@ -20,7 +20,7 @@ namespace STFastDesktop.POJO
 
         public Administrador(int id, string usuario, string passwd)
         {
-            Id = id;
+            Id_Admin = id;
             Usuario = usuario;
             Passwd = passwd;
         }

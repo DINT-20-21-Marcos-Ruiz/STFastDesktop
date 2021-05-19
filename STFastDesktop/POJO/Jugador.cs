@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace STFastDesktop.POJO
 {
     public enum Sexo {Hombre, Mujer }
-    class Jugador : INotifyPropertyChanged
+    public class Jugador : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        public int Id_Jugador { get; set; }
         public string ImgPerfil { get; set; }
         public int Equipo { get; set; }
         public string Apodo { get; set; }
@@ -25,13 +25,23 @@ namespace STFastDesktop.POJO
 
         public Jugador(int id, string imgPerfil, int equipo, string apodo, string passwd, Sexo sexo, DateTime fechaCreacion)
         {
-            Id = id;
+            Id_Jugador = id;
             ImgPerfil = imgPerfil;
             Equipo = equipo;
             Apodo = apodo;
             Passwd = passwd;
             Sexo = sexo;
             FechaCreacion = fechaCreacion;
+        }
+        public Jugador(Jugador jugadorSeleccionado)
+        {
+            Id_Jugador = jugadorSeleccionado.Id_Jugador;
+            ImgPerfil = jugadorSeleccionado.ImgPerfil;
+            Equipo = jugadorSeleccionado.Equipo;
+            Apodo = jugadorSeleccionado.Apodo;
+            Passwd = jugadorSeleccionado.Passwd;
+            Sexo = jugadorSeleccionado.Sexo;
+            FechaCreacion = jugadorSeleccionado.FechaCreacion;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

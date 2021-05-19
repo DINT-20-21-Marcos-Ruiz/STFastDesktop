@@ -7,21 +7,27 @@ using System.Threading.Tasks;
 
 namespace STFastDesktop.POJO
 {
-    class Juego : INotifyPropertyChanged
+    public class Juego : INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public int JNombre { get; set; }
+        public int Id_Juego { get; set; }
+        public string JNombre { get; set; }
         public string Logo { get; set; }
 
         public Juego()
         {
 
         }
-        public Juego(int id, int jNombre, string logo)
+        public Juego(int id, string jNombre, string logo)
         {
-            Id = id;
+            Id_Juego = id;
             JNombre = jNombre;
             Logo = logo;
+        }
+        public Juego(Juego juegoSeleccionado)
+        {
+            Id_Juego = juegoSeleccionado.Id_Juego;
+            JNombre = juegoSeleccionado.JNombre;
+            Logo = juegoSeleccionado.Logo;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -45,5 +45,89 @@ namespace STFastDesktop
             {
                
             });
+
+        public static readonly RoutedUICommand AñadirJuego = new RoutedUICommand(
+            "AñadirJuego",
+            "AñadirJuego",
+            typeof(CustomCommands),
+            new InputGestureCollection {});
+        public static readonly RoutedUICommand ModificarJuego = new RoutedUICommand(
+            "ModificarJuego",
+            "ModificarJuego",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand GuardarJuego = new RoutedUICommand(
+            "GuardarJuego",
+            "GuardarJuego",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand EliminarJuego = new RoutedUICommand(
+            "EliminarJuego",
+            "EliminarJuego",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+
+        public static readonly RoutedUICommand AñadirEquipo = new RoutedUICommand(
+            "AñadirEquipo",
+            "AñadirEquipo",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand ModificarEquipo = new RoutedUICommand(
+            "ModificarEquipo",
+            "ModificarEquipo",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand GuardarEquipo = new RoutedUICommand(
+            "GuardarEquipo",
+            "GuardarEquipo",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand EliminarEquipo = new RoutedUICommand(
+            "EliminarEquipo",
+            "EliminarEquipo",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+
+        public static readonly RoutedUICommand AñadirJugador = new RoutedUICommand(
+            "AñadirJugador",
+            "AñadirJugador",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand ModificarJugador = new RoutedUICommand(
+            "ModificarJugador",
+            "ModificarJugador",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand GuardarJugador = new RoutedUICommand(
+            "GuardarJugador",
+            "GuardarJugador",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand EliminarJugador = new RoutedUICommand(
+            "EliminarJugador",
+            "EliminarJugador",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+
+        public static readonly RoutedUICommand AñadirCompeticion = new RoutedUICommand(
+            "AñadirCompeticion",
+            "AñadirCompeticion",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand ModificarCompeticion = new RoutedUICommand(
+            "ModificarCompeticion",
+            "ModificarCompeticion",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand GuardarCompeticion = new RoutedUICommand(
+            "GuardarCompeticion",
+            "GuardarCompeticion",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
+        public static readonly RoutedUICommand EliminarCompeticion = new RoutedUICommand(
+            "EliminarCompeticion",
+            "EliminarCompeticion",
+            typeof(CustomCommands),
+            new InputGestureCollection { });
     }
 }
